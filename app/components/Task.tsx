@@ -17,6 +17,8 @@ export const Task = () => {
       setTasks([...tasks, { id: Date.now(), text: newTask }]);
       setNewTask("");
       setIsAdding(false);
+    } else if (newTask.trim() === "") {
+      setIsAdding(false);
     }
   };
 
@@ -83,7 +85,6 @@ export const Task = () => {
                 <button
                   onClick={handleAddTask}
                   className={`px-4 py-2 text-sm text-white rounded-md bg-blue-500 cursor-pointer`}
-                  disabled={!newTask.trim()}
                 >
                   {newTask.trim() ? "Add" : "Ok"}
                 </button>
