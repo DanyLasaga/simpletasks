@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TaskItem from "./TaskItem";
 import Image from "next/image";
+import EditableInput from "./EditableInput";
 export interface Task {
   id: number;
   text: string;
@@ -49,13 +50,15 @@ export const Task = () => {
                 width={24}
                 height={24}
               />
-              <input
+              {/* <input
                 type="text"
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
                 placeholder="Type to add new task"
                 className="w-full p-2 rounded-md focus:outline-none focus:ring-none focus:border-none caret-blue-500"
-              />
+              /> */}
+              <EditableInput value={newTask} onChange={setNewTask} />
+
               <Image
                 src="/images/avatar.webp"
                 alt="avatar"
