@@ -23,6 +23,11 @@ export const Task = () => {
     }
   };
 
+  const cancelTask = () => {
+    setIsAdding(false);
+    setNewTask("");
+  };
+
   return (
     <div className="w-full">
       <div className="bg-white p-4">
@@ -50,13 +55,7 @@ export const Task = () => {
                 width={24}
                 height={24}
               />
-              {/* <input
-                type="text"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                placeholder="Type to add new task"
-                className="w-full p-2 rounded-md focus:outline-none focus:ring-none focus:border-none caret-blue-500"
-              /> */}
+
               <EditableInput value={newTask} onChange={setNewTask} />
 
               <Image
@@ -161,7 +160,7 @@ export const Task = () => {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setIsAdding(false)}
+                  onClick={cancelTask}
                   className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-sm cursor-pointer"
                 >
                   Cancel
