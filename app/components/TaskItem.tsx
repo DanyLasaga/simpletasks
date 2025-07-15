@@ -6,8 +6,8 @@ interface TaskItemProps {
 
 const TaskItem = ({ task }: TaskItemProps) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mt-2 flex items-center">
-      <input type="checkbox" className="mr-4" />
+    <div className="bg-white rounded-lg p-4 mt-2 flex items-center">
+      <input type="checkbox" className="mr-3 ml-4 size-5" />
       <span>{task.text}</span>
     </div>
   );

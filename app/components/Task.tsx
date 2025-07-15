@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import TaskItem from "./TaskItem";
-
+import Image from "next/image";
 export interface Task {
   id: number;
   text: string;
@@ -23,68 +23,149 @@ export const Task = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl">
+    <div className="w-full">
       <div className="bg-white p-4">
         {!isAdding ? (
           <div
             className="flex items-center cursor-pointer text-gray-500"
             onClick={() => setIsAdding(true)}
           >
-            <span className="text-2xl mr-2">+</span>
+            <Image
+              src="/icons/plus-square.svg"
+              alt="plus-square"
+              className="mx-3"
+              width={24}
+              height={24}
+            />
             <span>Type to add new task</span>
           </div>
         ) : (
-          <div>
-            <input
-              type="text"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              placeholder="Type to add new task"
-              className="w-full p-2 border rounded-md"
-            />
-            <div className="flex justify-between items-center mt-2">
-              <div className="flex gap-2">
+          <div className="flex flex-col shadow-lg shadow-gray-200 rounded-sm">
+            <div className="flex flex-row rounded-t-sm border-gray-200 border pb-3 gap-2">
+              <Image
+                src="/icons/plus-square.svg"
+                alt="plus-square"
+                className="mx-3"
+                width={24}
+                height={24}
+              />
+              <input
+                type="text"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                placeholder="Type to add new task"
+                className="w-full p-2 rounded-md focus:outline-none focus:ring-none focus:border-none caret-blue-500"
+              />
+              <Image
+                src="/images/avatar.webp"
+                alt="avatar"
+                className={`rounded-full m-2 ${
+                  !newTask.trim()
+                    ? "cursor-not-allowed opacity-50"
+                    : "cursor-pointer opacity-100"
+                }`}
+                width={26}
+                height={26}
+              />
+            </div>
+            <div className="bg-gray-100 rounded-b-sm flex justify-between items-center border border-gray-200 p-2">
+              <div className="flex flex-row gap-2">
                 <button
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className={`px-4 py-2 text-xs font-semibold text-gray-800 bg-slate-200 rounded-sm flex flex-row items-center gap-2 ${
+                    !newTask.trim()
+                      ? "cursor-not-allowed opacity-50"
+                      : "cursor-pointer opacity-100"
+                  }`}
                   disabled={!newTask.trim()}
                 >
+                  <Image
+                    src="/icons/maximize-2.svg"
+                    alt="plus-square"
+                    className=""
+                    width={20}
+                    height={20}
+                  />
                   Open
                 </button>
                 <button
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                    !newTask.trim()
+                      ? "cursor-not-allowed opacity-40"
+                      : "cursor-pointer opacity-70"
+                  }`}
                   disabled={!newTask.trim()}
                 >
+                  <Image
+                    src="/icons/calendar.svg"
+                    alt="plus-square"
+                    className=""
+                    width={20}
+                    height={20}
+                  />
                   Today
                 </button>
                 <button
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                    !newTask.trim()
+                      ? "cursor-not-allowed opacity-40"
+                      : "cursor-pointer opacity-70"
+                  }`}
                   disabled={!newTask.trim()}
                 >
+                  <Image
+                    src="/icons/unlock.svg"
+                    alt="plus-square"
+                    className=""
+                    width={20}
+                    height={20}
+                  />
                   Public
                 </button>
                 <button
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                    !newTask.trim()
+                      ? "cursor-not-allowed opacity-40"
+                      : "cursor-pointer opacity-70"
+                  }`}
                   disabled={!newTask.trim()}
                 >
+                  <Image
+                    src="/icons/north-star.svg"
+                    alt="plus-square"
+                    className=""
+                    width={20}
+                    height={20}
+                  />
                   Normal
                 </button>
                 <button
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                    !newTask.trim()
+                      ? "cursor-not-allowed opacity-40"
+                      : "cursor-pointer opacity-70"
+                  }`}
                   disabled={!newTask.trim()}
                 >
+                  <Image
+                    src="/icons/ZeroCircle.svg"
+                    alt="plus-square"
+                    className=""
+                    width={20}
+                    height={20}
+                  />
                   Estimation
                 </button>
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => setIsAdding(false)}
-                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md cursor-pointer"
+                  className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-sm cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleAddTask}
-                  className={`px-4 py-2 text-sm text-white rounded-md bg-blue-500 cursor-pointer`}
+                  className={`px-4 py-2 text-sm text-white rounded-sm bg-blue-500 cursor-pointer`}
                 >
                   {newTask.trim() ? "Add" : "Ok"}
                 </button>
