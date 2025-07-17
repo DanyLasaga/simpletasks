@@ -2,30 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
-
-const HIGHLIGHT_PATTERNS = [
-  {
-    regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
-    className: "text-green-600",
-  }, // Email (prioridad alta)
-  {
-    regex: /\bhttps?:\/\/[^\s]+/g,
-    className: "text-orange-500",
-  }, // URL completa
-  {
-    regex: /\bwww\.[^\s]+/g,
-    className: "text-orange-400",
-  }, // www links (opcional)
-  {
-    // Solo detecta menciones si el '@' no está precedido por letras, números, punto, guion bajo, etc.
-    regex: /(?<![a-zA-Z0-9._%+-])@[a-zA-Z0-9_-]+/g,
-    className: "text-blue-600",
-  }, // Mención
-  {
-    regex: /#([\w-]+)/g,
-    className: "text-purple-600",
-  }, // Hashtag
-];
+import { highlightText } from "../utils/highlightUtils";
 
 interface EditableInputProps {
   value: string;
@@ -43,19 +20,16 @@ const EditableInput: React.FC<EditableInputProps> = ({
   useEffect(() => {
     if (contentRef.current && value !== contentRef.current.innerText) {
       contentRef.current.innerText = value;
-      highlightText(value);
     }
   }, [value]);
 
-  const highlightText = (text: string) => {
-    let sanitized = DOMPurify.sanitize(text);
-    for (const { regex, className } of HIGHLIGHT_PATTERNS) {
-      sanitized = sanitized.replace(
-        regex,
-        (match: string) => `<span class="${className}">${match}</span>`
-      );
-    }
-    return sanitized;
+  /**
+   * Maneja el resaltado usando utilidades externas y sanitiza el HTML.
+   */
+  const getHighlightedHtml = (text: string) => {
+    // Sanitiza primero y luego aplica el resaltado
+    const sanitized = DOMPurify.sanitize(text);
+    return highlightText(sanitized);
   };
 
   const handleInput = () => {
@@ -77,7 +51,9 @@ const EditableInput: React.FC<EditableInputProps> = ({
       {/* Texto resaltado */}
       <div
         className="absolute inset-0 whitespace-pre-wrap break-words text-gray-800 p-2 pointer-events-none"
-        dangerouslySetInnerHTML={{ __html: highlightText(value) + "\u200B" }}
+        dangerouslySetInnerHTML={{
+          __html: getHighlightedHtml(value) + "\u200B",
+        }}
         style={{ zIndex: 2 }}
       />
       {/* Input editable */}

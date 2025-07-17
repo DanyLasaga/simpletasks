@@ -1,42 +1,16 @@
-// Utilidad para parsear texto y extraer menciones, hashtags, emails y links como chips clickeables
-export type ContentType = "text" | "url" | "email" | "mention" | "hashtag";
+// utils/parseText.ts
+import { TEXT_PATTERNS, ContentType } from "./textPatterns";
 
 export interface ParsedElement {
   id: string;
-  type: ContentType;
+  type: ContentType | "text";
   content: string;
   originalText: string;
 }
 
-// Función para parsear el texto y extraer diferentes tipos de contenido
 export function parseText(text: string): ParsedElement[] {
   const elements: ParsedElement[] = [];
 
-  // Patrones regex para diferentes tipos de contenido
-  const patterns = [
-    {
-      type: "url" as ContentType,
-      regex: /(https?:\/\/[^\s]+|www\.[^\s]+)/gi,
-      priority: 1,
-    },
-    {
-      type: "email" as ContentType,
-      regex: /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/gi,
-      priority: 2,
-    },
-    {
-      type: "mention" as ContentType,
-      regex: /@([a-zA-Z0-9_-]+)/gi,
-      priority: 3,
-    },
-    {
-      type: "hashtag" as ContentType,
-      regex: /#([a-zA-Z0-9_-]+)/gi,
-      priority: 4,
-    },
-  ];
-
-  // Encontrar todas las coincidencias con sus posiciones
   const matches: Array<{
     type: ContentType;
     match: string;
@@ -45,20 +19,19 @@ export function parseText(text: string): ParsedElement[] {
     priority: number;
   }> = [];
 
-  patterns.forEach((pattern) => {
+  TEXT_PATTERNS.forEach(({ type, regex, priority }) => {
+    const localRegex = new RegExp(regex.source, regex.flags); // crear nueva instancia
     let match;
-    const regex = new RegExp(pattern.regex.source, pattern.regex.flags);
-    while ((match = regex.exec(text)) !== null) {
+    while ((match = localRegex.exec(text)) !== null) {
       matches.push({
-        type: pattern.type,
+        type,
         match: match[0],
         start: match.index,
         end: match.index + match[0].length,
-        priority: pattern.priority,
+        priority,
       });
     }
   });
-
   // Ordenar por posición y prioridad
   matches.sort((a, b) => {
     if (a.start !== b.start) return a.start - b.start;

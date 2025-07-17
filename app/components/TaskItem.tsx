@@ -1,24 +1,11 @@
 import { Task } from "./Task";
-import { ParsedElement, ContentType } from "./parseText";
+import { ParsedElement } from "../utils/parseText";
 import React from "react";
 interface TaskItemProps {
   task: Task;
 }
 
-const getChipStyle = (type: ContentType) => {
-  switch (type) {
-    case "url":
-      return "bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-200";
-    case "email":
-      return "bg-orange-100 text-orange-800 hover:bg-orange-200 border-orange-200";
-    case "mention":
-      return "bg-green-100 text-green-800 hover:bg-green-200 border-green-200";
-    case "hashtag":
-      return "bg-purple-100 text-purple-800 hover:bg-purple-200 border-purple-200";
-    default:
-      return "text-gray-800";
-  }
-};
+import ChipList from "../containers/ChipList";
 
 const handleChipClick = (element: ParsedElement) => {
   switch (element.type) {
@@ -51,25 +38,10 @@ const TaskItem = ({ task }: TaskItemProps) => {
       <input type="checkbox" className="mr-3 ml-4 size-5" />
       <div className="flex flex-wrap gap-2">
         {task.parsedElements && task.parsedElements.length > 0 ? (
-          task.parsedElements.map((element) => (
-            <span
-              key={element.id}
-              className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${getChipStyle(
-                element.type
-              )} ${
-                ["url", "email", "mention", "hashtag"].includes(element.type)
-                  ? "cursor-pointer transition-colors"
-                  : ""
-              }`}
-              onClick={() =>
-                ["url", "email", "mention", "hashtag"].includes(element.type)
-                  ? handleChipClick(element)
-                  : undefined
-              }
-            >
-              {element.content}
-            </span>
-          ))
+          <ChipList
+            elements={task.parsedElements}
+            onChipClick={handleChipClick}
+          />
         ) : (
           <span>{task.text}</span>
         )}
