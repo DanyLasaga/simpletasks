@@ -136,6 +136,26 @@ const AddTask = ({
             />
             Estimation
           </button>
+          {isEditing && (
+            <button
+              className={`px-4 py-2 text-sm text-gray-700 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                !newTask.trim()
+                  ? "cursor-not-allowed opacity-40"
+                  : "cursor-pointer opacity-70"
+              }`}
+              disabled={!newTask.trim()}
+              onClick={onDelete}
+            >
+              <Image
+                src="/icons/trash.svg"
+                alt="delete"
+                className=""
+                width={20}
+                height={20}
+              />
+              Delete
+            </button>
+          )}
         </div>
         <div className="flex gap-2">
           <button
