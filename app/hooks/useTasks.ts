@@ -16,67 +16,51 @@ const useTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const updateTask = (id: string, newText: string) => {
-    setTasks((prev) => prev.map(task =>
-      task.id === id
-        ? { ...task, text: newText, parsedElements: parseText(newText) }
-        : task
-    ));
+    taskService.updateTask(id, newText).then((updated) => {
+      if (!updated) return;
+      setTasks((prev) => prev.map(task =>
+        task.id === id ? updated : task
+      ));
+    });
   };
+
 
   const removeTask = (id: string) => {
-    setTasks((prev) => prev.filter(task => task.id !== id));
+    taskService.removeTask(id).then((ok) => {
+      if (!ok) return;
+      setTasks((prev) => prev.filter(task => task.id !== id));
+    });
   };
 
 
-  // Leer tareas del localStorage al cargar
+
+  // Leer tareas usando el servicio mockeado al cargar
   useEffect(() => {
-    const storedTasks = localStorage.getItem(STORAGE_KEY);
-    if (storedTasks) {
-      const raw: Omit<Task, "parsedElements">[] = JSON.parse(storedTasks);
-      const parsed = raw.map((task) => ({
-        ...task,
-        parsedElements: parseText(task.text),
-      }));
-      setTasks(parsed);
-    }
+    taskService.getTasks().then(setTasks);
   }, []);
 
-  // Guardar tareas en localStorage (sin parsedElements)
-  useEffect(() => {
-    const toStore = tasks.map(({ id, text, completed }) => ({
-      id,
-      text,
-      completed,
-    }));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
-  }, [tasks]);
+  // Ya no es necesario guardar manualmente en localStorage, el servicio lo hace.
+  // Si quieres mantener sincronía con otros tabs, puedes escuchar storage events aquí.
 
   const addTask = (text: string) => {
-    const newTask: Task = {
-      id: crypto.randomUUID(),
-      text,
-      completed: false,
-      parsedElements: parseText(text),
-    };
-    setTasks((prev) => [...prev, newTask]);
+    taskService.addTask(text).then((newTask) => {
+      setTasks((prev) => [...prev, newTask]);
+    });
   };
 
   // Ya definido arriba, no es necesario redefinir removeTask aquí.
+  // La función removeTask expuesta abajo ahora usa el servicio.
+
 
   const toggleTask = (id: string) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              completed: !task.completed,
-              // Vuelve a parsear el texto en caso de que quieras resaltar diferente si está completado
-              parsedElements: parseText(task.text),
-            }
-          : task
-      )
-    );
+    taskService.toggleTask(id).then((updated) => {
+      if (!updated) return;
+      setTasks((prev) => prev.map((task) =>
+        task.id === id ? updated : task
+      ));
+    });
   };
+
 
   return {
     tasks,
