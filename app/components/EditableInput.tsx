@@ -30,9 +30,14 @@ const HIGHLIGHT_PATTERNS = [
 interface EditableInputProps {
   value: string;
   onChange: (val: string) => void;
+  placeholder?: string;
 }
 
-const EditableInput: React.FC<EditableInputProps> = ({ value, onChange }) => {
+const EditableInput: React.FC<EditableInputProps> = ({
+  value,
+  onChange,
+  placeholder,
+}) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,15 +65,27 @@ const EditableInput: React.FC<EditableInputProps> = ({ value, onChange }) => {
 
   return (
     <div className="relative w-full">
+      {/* Placeholder visual solo si value está vacío */}
+      {(!value || value.length === 0) && placeholder && (
+        <div
+          className="absolute inset-0 p-2 text-gray-400 pointer-events-none select-none"
+          style={{ zIndex: 1 }}
+        >
+          {placeholder}
+        </div>
+      )}
+      {/* Texto resaltado */}
       <div
         className="absolute inset-0 whitespace-pre-wrap break-words text-gray-800 p-2 pointer-events-none"
         dangerouslySetInnerHTML={{ __html: highlightText(value) + "\u200B" }}
+        style={{ zIndex: 2 }}
       />
+      {/* Input editable */}
       <div
         ref={contentRef}
         contentEditable
         onInput={handleInput}
-        className="relative z-10 bg-transparent border p-2 w-full h-20 overflow-auto resize-none focus:outline-none text-transparent caret-black"
+        className="relative z-10 bg-transparent border p-2 w-full h-14 overflow-auto resize-none focus:outline-none text-transparent caret-black"
         spellCheck={false}
       />
     </div>

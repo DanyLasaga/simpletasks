@@ -47,16 +47,20 @@ export const Task = () => {
           </div>
         ) : (
           <div className="flex flex-col shadow-lg shadow-gray-200 rounded-sm">
-            <div className="flex flex-row rounded-t-sm border-gray-200 border pb-3 gap-2">
+            <div className="flex flex-row items-start rounded-t-sm border-gray-200 border pb-1">
               <Image
                 src="/icons/plus-square.svg"
                 alt="plus-square"
-                className="mx-3"
+                className="mx-3 pt-2.5"
                 width={24}
                 height={24}
               />
 
-              <EditableInput value={newTask} onChange={setNewTask} />
+              <EditableInput
+                value={newTask}
+                onChange={setNewTask}
+                placeholder="Type to add new task"
+              />
 
               <Image
                 src="/images/avatar.webp"
@@ -167,7 +171,7 @@ export const Task = () => {
                 </button>
                 <button
                   onClick={handleAddTask}
-                  className={`px-4 py-2 text-sm text-white rounded-sm bg-blue-500 cursor-pointer`}
+                  className={`px-4 py-2 text-sm text-white rounded-sm bg-blue-800 cursor-pointer`}
                 >
                   {newTask.trim() ? "Add" : "Ok"}
                 </button>
