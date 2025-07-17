@@ -4,9 +4,12 @@ import { useState } from "react";
 import TaskItem from "./TaskItem";
 import Image from "next/image";
 import EditableInput from "./EditableInput";
+import { ParsedElement, parseText } from "./parseText";
+
 export interface Task {
   id: number;
   text: string;
+  parsedElements: ParsedElement[];
 }
 export const Task = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -15,7 +18,14 @@ export const Task = () => {
 
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: newTask }]);
+      setTasks([
+        ...tasks,
+        {
+          id: Date.now(),
+          text: newTask,
+          parsedElements: parseText(newTask),
+        },
+      ]);
       setNewTask("");
       setIsAdding(false);
     } else if (newTask.trim() === "") {
