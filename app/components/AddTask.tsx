@@ -8,9 +8,18 @@ interface AddTaskProps {
   setNewTask: (value: string) => void;
   handleAddTask: () => void;
   cancelTask: () => void;
+  isEditing?: boolean;
+  onDelete?: () => void;
 }
 
-const AddTask = ({ newTask, setNewTask, handleAddTask, cancelTask }: AddTaskProps) => {
+const AddTask = ({
+  newTask,
+  setNewTask,
+  handleAddTask,
+  cancelTask,
+  isEditing,
+  onDelete,
+}: AddTaskProps) => {
   return (
     <div className="flex flex-col shadow-lg shadow-gray-200 rounded-sm">
       <div className="flex flex-row items-start rounded-t-sm border-gray-200 border pb-1">
@@ -57,6 +66,8 @@ const AddTask = ({ newTask, setNewTask, handleAddTask, cancelTask }: AddTaskProp
             />
             Open
           </button>
+        </div>
+        <div className="flex flex-row gap-2">
           <button
             className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
               !newTask.trim()
@@ -137,7 +148,13 @@ const AddTask = ({ newTask, setNewTask, handleAddTask, cancelTask }: AddTaskProp
             onClick={handleAddTask}
             className={`px-4 py-2 text-sm text-white rounded-sm bg-blue-800 cursor-pointer`}
           >
-            {newTask.trim() ? "Add" : "Ok"}
+            {isEditing
+              ? newTask.trim()
+                ? "Save"
+                : "Ok"
+              : newTask.trim()
+              ? "Add"
+              : "Ok"}
           </button>
         </div>
       </div>

@@ -1,11 +1,14 @@
 import { Task } from "./Task";
 import { ParsedElement } from "../utils/parseText";
 import React from "react";
+import ChipList from "../containers/ChipList";
+
 interface TaskItemProps {
   task: Task;
+  onToggle: (id: string) => void;
+  onEdit?: (task: Task) => void;
+  isEditing?: boolean;
 }
-
-import ChipList from "../containers/ChipList";
 
 const handleChipClick = (element: ParsedElement) => {
   switch (element.type) {
@@ -27,15 +30,27 @@ const handleChipClick = (element: ParsedElement) => {
       alert(`Hashtag: ${element.content}`);
       break;
     default:
-      // No action for plain text
       break;
   }
 };
 
-const TaskItem = ({ task }: TaskItemProps) => {
+const TaskItem = ({ task, onToggle, onEdit, isEditing }: TaskItemProps) => {
   return (
-    <div className="bg-white rounded-lg p-4 mt-2 flex items-center text-gray-700">
-      <input type="checkbox" className="mr-3 ml-4 size-5" />
+    <div
+      className={`bg-white rounded-lg p-4 mt-2 flex items-center text-gray-700 ${
+        task.completed ? "opacity-60 line-through" : ""
+      }`}
+      onClick={() => {
+        if (onEdit && !isEditing) onEdit(task);
+      }}
+      style={{ cursor: onEdit && !isEditing ? 'pointer' : 'default' }}
+    >
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
+        className="mr-3 ml-4 size-5 accent-green-500"
+      />
       <div className="flex flex-wrap gap-2">
         {task.parsedElements && task.parsedElements.length > 0 ? (
           <ChipList
