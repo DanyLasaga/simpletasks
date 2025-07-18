@@ -8,7 +8,7 @@ export function highlightText(text: string): string {
     if (!className) continue; // Solo patrones que tengan clase definida
     sanitized = sanitized.replace(
       regex,
-      (match: string) => `<span class="${className}">${match}</span>`
+      (match: string) => `<span class="${className}">${match}</span>`,
     );
   }
 

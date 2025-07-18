@@ -43,14 +43,14 @@ const TaskItem = ({ task, onToggle, onEdit, isEditing }: TaskItemProps) => {
       onClick={() => {
         if (onEdit && !isEditing) onEdit(task);
       }}
-      style={{ cursor: onEdit && !isEditing ? 'pointer' : 'default' }}
+      style={{ cursor: onEdit && !isEditing ? "pointer" : "default" }}
     >
       <input
         type="checkbox"
         checked={task.completed}
         onChange={() => onToggle(task.id)}
         className="mr-3 ml-4 size-5 accent-green-500"
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       />
       <div className="flex flex-wrap gap-2">
         {task.parsedElements && task.parsedElements.length > 0 ? (

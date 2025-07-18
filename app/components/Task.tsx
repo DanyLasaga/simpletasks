@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import useTasks, { Task as StorageTask } from "../hooks/useTasks";
 import TaskItem from "./TaskItem";
 import AddTask from "./AddTask";
 import Image from "next/image";
-import { ParsedElement, parseText } from "../utils/parseText";
+import { ParsedElement } from "../utils/parseText";
 
 export interface Task {
   id: string;
@@ -13,6 +13,7 @@ export interface Task {
   completed: boolean;
   parsedElements: ParsedElement[];
 }
+
 export const Task = () => {
   const {
     tasks: storageTasks,
@@ -25,11 +26,11 @@ export const Task = () => {
   const [newTask, setNewTask] = useState("");
   const [editingTask, setEditingTask] = useState<StorageTask | null>(null);
 
-  const handleEditTask = (task: StorageTask) => {
+  const handleEditTask = useCallback((task: StorageTask) => {
     setEditingTask(task);
     setNewTask(task.text);
     setIsAdding(false);
-  };
+  }, []);
 
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
@@ -45,6 +46,18 @@ export const Task = () => {
     setIsAdding(false);
     setNewTask("");
   };
+
+  const taskList = useMemo(() => {
+    return storageTasks.map((task) => (
+      <TaskItem
+        key={task.id}
+        task={task}
+        onToggle={toggleTask}
+        onEdit={handleEditTask}
+        isEditing={editingTask?.id === task.id}
+      />
+    ));
+  }, [storageTasks, editingTask, toggleTask, handleEditTask]);
 
   return (
     <div className="w-full">
@@ -97,21 +110,7 @@ export const Task = () => {
           />
         )}
       </div>
-      <div className="mt-4">
-        {useMemo(
-          () =>
-            storageTasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onToggle={toggleTask}
-                onEdit={handleEditTask}
-                isEditing={editingTask?.id === task.id}
-              />
-            )),
-          [storageTasks, editingTask]
-        )}
-      </div>
+      <div className="mt-4">{taskList}</div>
     </div>
   );
 };

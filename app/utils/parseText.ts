@@ -40,7 +40,7 @@ export function parseText(text: string): ParsedElement[] {
 
   // Filtrar matches para evitar solapamientos
   const nonOverlapping: typeof matches = [];
-  let occupied: boolean[] = Array(text.length).fill(false);
+  const occupied: boolean[] = Array(text.length).fill(false);
   matches.forEach((m) => {
     let overlaps = false;
     for (let i = m.start; i < m.end; i++) {

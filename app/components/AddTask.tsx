@@ -175,8 +175,8 @@ const AddTask = ({
                 ? "Save"
                 : "Ok"
               : newTask.trim()
-              ? "Add"
-              : "Ok"}
+                ? "Add"
+                : "Ok"}
           </button>
         </div>
         <div className="flex gap-2 min-[1230px]:hidden">

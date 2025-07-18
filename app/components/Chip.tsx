@@ -25,13 +25,13 @@ const getChipStyle = (type: ContentType | "text") => {
 
 const Chip: React.FC<ChipProps> = ({ element, onClick }) => {
   const clickable = ["url", "email", "mention", "hashtag"].includes(
-    element.type as string
+    element.type as string,
   );
   return (
     <span
       key={element.id}
       className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${getChipStyle(
-        element.type
+        element.type,
       )} ${clickable ? "cursor-pointer transition-colors" : ""}`}
       onClick={clickable && onClick ? () => onClick(element) : undefined}
     >
