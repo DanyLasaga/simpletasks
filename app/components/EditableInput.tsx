@@ -38,7 +38,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-y-scroll">
       {/* Placeholder visual solo si value está vacío */}
       {(!value || value.length === 0) && placeholder && (
         <div
