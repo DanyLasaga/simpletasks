@@ -185,15 +185,15 @@ const AddTask = ({
             onClick={() => {
               if (isEditing) {
                 if (newTask.trim()) {
-                  handleAddTask(); // 'S' (Save)
+                  handleAddTask();
                 } else {
-                  cancelTask(); // 'X' (Cancel)
+                  cancelTask();
                 }
               } else {
                 if (newTask.trim()) {
-                  handleAddTask(); // '+' (Add)
+                  handleAddTask();
                 } else {
-                  cancelTask(); // 'X' (Cancel)
+                  cancelTask();
                 }
               }
             }}

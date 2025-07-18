@@ -5,7 +5,7 @@ const STORAGE_KEY = "tasks";
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export async function getTasks(): Promise<Task[]> {
-  await delay(300); // Simula fetch
+  await delay(300);
   const stored = localStorage.getItem(STORAGE_KEY);
   if (!stored) return [];
   const raw = JSON.parse(stored) as Omit<Task, "parsedElements">[];

@@ -23,11 +23,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
     }
   }, [value]);
 
-  /**
-   * Maneja el resaltado usando utilidades externas y sanitiza el HTML.
-   */
   const getHighlightedHtml = (text: string) => {
-    // Sanitiza primero y luego aplica el resaltado
     const sanitized = DOMPurify.sanitize(text);
     return highlightText(sanitized);
   };
@@ -39,7 +35,6 @@ const EditableInput: React.FC<EditableInputProps> = ({
 
   return (
     <div className="relative w-full overflow-y-scroll">
-      {/* Placeholder visual solo si value está vacío */}
       {(!value || value.length === 0) && placeholder && (
         <div
           className="absolute inset-0 p-2 text-gray-400 pointer-events-none select-none"
@@ -48,7 +43,6 @@ const EditableInput: React.FC<EditableInputProps> = ({
           {placeholder}
         </div>
       )}
-      {/* Texto resaltado */}
       <div
         className="absolute inset-0 whitespace-pre-wrap break-words text-gray-800 p-2 pointer-events-none"
         dangerouslySetInnerHTML={{
@@ -56,7 +50,6 @@ const EditableInput: React.FC<EditableInputProps> = ({
         }}
         style={{ zIndex: 2 }}
       />
-      {/* Input editable */}
       <div
         ref={contentRef}
         contentEditable

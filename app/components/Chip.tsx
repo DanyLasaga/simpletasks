@@ -35,7 +35,6 @@ const Chip: React.FC<ChipProps> = ({ element, onClick }) => {
       )} ${clickable ? "cursor-pointer transition-colors" : ""}`}
       onClick={clickable && onClick ? () => onClick(element) : undefined}
     >
-      {/* Icono a la izquierda según tipo de chip, usando placeholders de public/icons */}
       {element.type === "email" && (
         <Image
           src="/icons/mail.svg"

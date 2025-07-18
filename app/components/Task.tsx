@@ -14,17 +14,22 @@ export interface Task {
   parsedElements: ParsedElement[];
 }
 export const Task = () => {
-  const { tasks: storageTasks, addTask: addStorageTask, toggleTask, updateTask, removeTask } = useTasks();
+  const {
+    tasks: storageTasks,
+    addTask: addStorageTask,
+    toggleTask,
+    updateTask,
+    removeTask,
+  } = useTasks();
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState("");
   const [editingTask, setEditingTask] = useState<StorageTask | null>(null);
 
-  // Handler to start editing a task
   const handleEditTask = (task: StorageTask) => {
     setEditingTask(task);
-    setNewTask(task.text); // Pre-fill input for future
+    setNewTask(task.text);
     setIsAdding(false);
-  }
+  };
 
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
