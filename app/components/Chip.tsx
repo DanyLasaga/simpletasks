@@ -1,6 +1,7 @@
 import React from "react";
 import { ParsedElement } from "../utils/parseText";
 import { ContentType } from "../utils/textPatterns";
+import Image from "next/image";
 
 interface ChipProps {
   element: ParsedElement;
@@ -34,6 +35,34 @@ const Chip: React.FC<ChipProps> = ({ element, onClick }) => {
       )} ${clickable ? "cursor-pointer transition-colors" : ""}`}
       onClick={clickable && onClick ? () => onClick(element) : undefined}
     >
+      {/* Icono a la izquierda según tipo de chip, usando placeholders de public/icons */}
+      {element.type === "email" && (
+        <Image
+          src="/icons/mail.svg"
+          alt="email"
+          className="w-4 h-4"
+          width={20}
+          height={20}
+        />
+      )}
+      {element.type === "mention" && (
+        <Image
+          src="/images/avatar2.webp"
+          alt="mention"
+          className="w-4 h-4 rounded-full"
+          width={20}
+          height={20}
+        />
+      )}
+      {element.type === "url" && (
+        <Image
+          src="/icons/link.svg"
+          alt="link"
+          className="w-4 h-4"
+          width={20}
+          height={20}
+        />
+      )}
       {element.content}
     </span>
   );
