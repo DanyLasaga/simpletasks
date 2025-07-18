@@ -51,7 +51,7 @@ const AddTask = ({
         <div className="flex flex-row items-start">
           <div className="flex flex-row gap-2 mr-2 min-[1230px]:mr-4">
             <button
-              className={`px-4 py-2 text-xs font-semibold text-gray-800 bg-slate-200 rounded-sm flex flex-row items-center gap-2 ${
+              className={`px-4 max-sm:px-2 py-2 text-xs font-semibold text-gray-800 bg-slate-200 rounded-sm flex flex-row items-center gap-2 ${
                 !newTask.trim()
                   ? "cursor-not-allowed opacity-50"
                   : "cursor-pointer opacity-100"
@@ -70,7 +70,7 @@ const AddTask = ({
           </div>
           <div className="flex flex-row gap-2">
             <button
-              className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+              className={`px-4 max-sm:px-2 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
                 !newTask.trim()
                   ? "cursor-not-allowed opacity-40"
                   : "cursor-pointer opacity-70"
@@ -87,7 +87,7 @@ const AddTask = ({
               <span className="max-[1230px]:hidden">Today</span>
             </button>
             <button
-              className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+              className={`px-4 max-sm:px-2 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
                 !newTask.trim()
                   ? "cursor-not-allowed opacity-40"
                   : "cursor-pointer opacity-70"
@@ -104,7 +104,7 @@ const AddTask = ({
               <span className="max-[1230px]:hidden">Public</span>
             </button>
             <button
-              className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+              className={`px-4 max-sm:px-2 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
                 !newTask.trim()
                   ? "cursor-not-allowed opacity-40"
                   : "cursor-pointer opacity-70"
@@ -121,7 +121,7 @@ const AddTask = ({
               <span className="max-[1230px]:hidden">Normal</span>
             </button>
             <button
-              className={`px-4 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+              className={`px-4 max-sm:px-2 py-2 text-sm text-gray-600 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
                 !newTask.trim()
                   ? "cursor-not-allowed opacity-40"
                   : "cursor-pointer opacity-70"
@@ -139,7 +139,7 @@ const AddTask = ({
             </button>
             {isEditing && (
               <button
-                className={`px-4 py-2 text-sm text-gray-700 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
+                className={`px-4 max-sm:px-2 py-2 text-sm text-gray-700 bg-transparent border border-gray-600 rounded-sm flex flex-row items-center gap-2 ${
                   !newTask.trim()
                     ? "cursor-not-allowed opacity-40"
                     : "cursor-pointer opacity-70"
@@ -175,13 +175,13 @@ const AddTask = ({
                 ? "Save"
                 : "Ok"
               : newTask.trim()
-                ? "Add"
-                : "Ok"}
+              ? "Add"
+              : "Ok"}
           </button>
         </div>
         <div className="flex gap-2 min-[1230px]:hidden">
           <button
-            className="px-4 py-2 text-sm bg-blue-800 text-white rounded-sm cursor-pointer"
+            className="px-4 max-sm:px-2 py-2 text-sm bg-blue-800 text-white rounded-sm cursor-pointer"
             onClick={() => {
               if (isEditing) {
                 if (newTask.trim()) {
